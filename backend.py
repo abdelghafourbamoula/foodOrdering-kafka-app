@@ -5,11 +5,11 @@ import uuid
 from kafka import KafkaProducer, producer
 from config import *
 
-logging.info("Will Generate orders evert 10 seconds")
-
 producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVER)
+logging.info("Will Generate orders every 10 seconds")
 
-for i in range(1, MAX_ORDERS):
+i = 1
+while True:
     data = {
         'order_id': str(uuid.uuid4())[:8],
         'user_id': str(uuid.uuid4())[:8],
@@ -21,7 +21,8 @@ for i in range(1, MAX_ORDERS):
         ORDER_TOPIC,
         json.dumps(data).encode('utf-8')
     )
-    time.sleep(5)
+    i += 1
+    # time.sleep(1)
 
 
 
